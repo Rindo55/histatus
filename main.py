@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 import requests
-import time
 import asyncio
+
 # Initialize the Pyrogram Client
 api_id = 3845818
 api_hash = "95937bcf6bc0938f263fc7ad96959c6d"
@@ -41,14 +41,15 @@ async def check_website():
 async def start(_, message):
     await message.reply_text("Bot Started!")
 
-# Start te bot and the background task
-
+# Function to start the asyncio event loop
 def start_asyncio():
     loop = asyncio.get_event_loop()
-    task = asyncio.create_task(check_website())
-    app.start()
-    loop.create_task(task)
-    loop.run_forever()
+    loop.create_task(check_website())
+    try:
+        app.start()
+        loop.run_forever()
+    except KeyboardInterrupt:
+        loop.stop()
 
 if __name__ == "__main__":
     start_asyncio()
