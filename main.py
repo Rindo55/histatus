@@ -35,7 +35,7 @@ def check_website_status():
 async def check_website():
     while True:
         check_website_status()
-        time.sleep(60)
+        await asyncio.sleep(60)
 
 @app.on_message(filters.command("start"))
 async def start(_, message):
