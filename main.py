@@ -19,7 +19,7 @@ def check_website_status():
         return False, response.status_code
 
 # Track website status changes
-website_down = False
+website_down = True
 
 # Function to send messages to the channel
 
