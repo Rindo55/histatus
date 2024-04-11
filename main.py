@@ -14,21 +14,21 @@ url = "https://ddl animxt.fun"
 website_down = False
 
 # Function to check the website status
-async def check_website_status():
+def check_website_status():
     global website_down
     try:
         response = requests.get(url)
         if response.status_code != 200:
             if not website_down:
-                await app.send_message(-1002029401168, f"HiAnime is Reporting Error\nHTTP ERROR {response.status_code}")
+                app.send_message(-1002029401168, f"HiAnime is Reporting Error\nHTTP ERROR {response.status_code}")
                 website_down = True
         else:
             if website_down:
-                await app.send_message(-1002029401168, "HiAnime is Available\nAvailable")
+                app.send_message(-1002029401168, "HiAnime is Available\nAvailable")
                 website_down = False
     except requests.ConnectionError:
         if not website_down:
-            await app.send_message(-1002029401168, "HiAnime is Reporting Error\nConnection Error")
+            app.send_message(-1002029401168, "HiAnime is Reporting Error\nConnection Error")
             website_down = True
 
 # Background task to check website status every minute
