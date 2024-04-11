@@ -14,7 +14,7 @@ url = "https://ddl animxt.fun"
 website_down = False
 
 # Function to check the website status
-def check_website_status():
+async def check_website_status():
     global website_down
     try:
         response = requests.get(url)
