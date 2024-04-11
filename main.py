@@ -1,43 +1,46 @@
-from pyrogram import Client
+from pyrogram import Client, filters
 import requests
 import time
 
-# Initialize your Pyrogram Client
+# Initialize the Pyrogram Client
 api_id = 3845818
 api_hash = "95937bcf6bc0938f263fc7ad96959c6d"
 bot_token = "6428443845:AAF9usGZRMRPPMuOfcjClNypt3N_p2_gUZc"
 
-app = Client("website_status_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+
+# Website URL to check
+url = "https://hianime.to"
+website_down = False
 
 # Function to check the website status
 def check_website_status():
-    url = "https://ddl.animxt.fun"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return True, None
-    else:
-        return False, response.status_code
+    global website_down
+    try:
+        response = requests.get(url)
+        if response.status_code != 200:
+            if not website_down:
+                app.send_message(-1002029401168, f"HiAnime is Reporting Error\nHTTP ERROR {response.status_code}")
+                website_down = True
+        else:
+            if website_down:
+                app.send_message(-1002029401168, "HiAnime is Available\nAvailable")
+                website_down = False
+    except requests.ConnectionError:
+        if not website_down:
+            app.send_message(-1002029401168, "HiAnime is Reporting Error\nConnection Error")
+            website_down = True
 
-# Track website status changes
-website_down = True
+# Background task to check website status every minute
+async def check_website():
+    while True:
+        check_website_status()
+        time.sleep(60)
 
-# Function to send messages to the channel
+@app.on_message(filters.command("start"))
+async def start(_, message):
+    await message.reply_text("Bot Started!")
 
-# Main loop to check website status periodically
-while True:
-    website_is_down, error_code = check_website_status()
-    
-    if website_is_down and not website_down:
-        app.start()
-        app.send_message(-1002029401168, f"**HiAnime is Reporting Error**\n\n`HTTP ERROR {error_code}`")
-        website_down = True
-    elif not website_is_down and website_down:
-        app.start()
-        app.send_message(-1002029401168, "**HiAnime is Available**\n\n`Available`")
-        website_down = False
-    
-    # Check every 5 minutes
-    time.sleep(120)
-
-# Start the bot
-app.run
+# Start the bot and the background task
+app.start()
+app.idle()
