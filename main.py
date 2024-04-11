@@ -42,15 +42,13 @@ async def start(_, message):
     await message.reply_text("Bot Started!")
 
 # Start te bot and the background task
-async def main():
-    task = asyncio.create_task(check_website())
-    await app.start()
-    await task
 
-async def main():
+def start_asyncio():
+    loop = asyncio.get_event_loop()
     task = asyncio.create_task(check_website())
-    await app.start()
-    await task
+    app.start()
+    loop.create_task(task)
+    loop.run_forever()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    start_asyncio()
