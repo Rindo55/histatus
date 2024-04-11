@@ -11,7 +11,7 @@ app = Client("website_status_bot", api_id=api_id, api_hash=api_hash, bot_token=b
 
 # Function to check the website status
 def check_website_status():
-    url = "https://hianime.to"
+    url = "https://ddl.animxt.fun"
     response = requests.get(url)
     if response.status_code == 200:
         return True, None
