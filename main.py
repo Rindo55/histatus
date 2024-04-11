@@ -47,4 +47,10 @@ async def main():
     await app.start()
     await task
 
-asyncio.run(main())
+async def main():
+    task = asyncio.create_task(check_website())
+    await app.start()
+    await task
+
+if __name__ == "__main__":
+    asyncio.run(main())
