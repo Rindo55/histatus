@@ -40,4 +40,6 @@ while True:
     time.sleep(120)
 
 # Start the bot
-app.run()
+app.start()
+print("Powered by hianime.to")
+idle()
