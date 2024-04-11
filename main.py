@@ -20,15 +20,15 @@ def check_website_status():
         response = requests.get(url)
         if response.status_code != 200:
             if not website_down:
-                app.send_message(-1002029401168, f"HiAnime is Reporting Error\nHTTP ERROR {response.status_code}")
+                await app.send_message(-1002029401168, f"HiAnime is Reporting Error\nHTTP ERROR {response.status_code}")
                 website_down = True
         else:
             if website_down:
-                app.send_message(-1002029401168, "HiAnime is Available\nAvailable")
+                await app.send_message(-1002029401168, "HiAnime is Available\nAvailable")
                 website_down = False
     except requests.ConnectionError:
         if not website_down:
-            app.send_message(-1002029401168, "HiAnime is Reporting Error\nConnection Error")
+            await app.send_message(-1002029401168, "HiAnime is Reporting Error\nConnection Error")
             website_down = True
 
 # Background task to check website status every minute
