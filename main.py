@@ -9,7 +9,7 @@ bot_token = "6428443845:AAF9usGZRMRPPMuOfcjClNypt3N_p2_gUZc"
 
 app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
-# Website URL to che
+# Website URL to check
 url = "https://ddl.animxt.fun"
 website_down = False
 
@@ -44,12 +44,14 @@ async def start(_, message):
 # Function to start the asyncio event loop
 def start_asyncio():
     loop = asyncio.get_event_loop()
-    loop.create_task(check_website())
+    task = loop.create_task(check_website())
     try:
-        app.start()
-        loop.run_forever()
+        loop.run_until_complete(task)
     except KeyboardInterrupt:
-        loop.stop()
+        task.cancel()
+        loop.run_until_complete(task)
+        loop.close()
 
 if __name__ == "__main__":
     start_asyncio()
+    
