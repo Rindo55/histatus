@@ -10,7 +10,7 @@ bot_token = "6428443845:AAF9usGZRMRPPMuOfcjClNypt3N_p2_gUZc"
 app = Client("my_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 # Website URL to check
-url = "https://hianime.to"
+url = "https://ddl animxt.fun"
 website_down = False
 
 # Function to check the website status
