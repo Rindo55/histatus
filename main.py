@@ -8,7 +8,9 @@ api_hash = "95937bcf6bc0938f263fc7ad96959c6d"
 bot_token = "6428443845:AAF9usGZRMRPPMuOfcjClNypt3N_p2_gUZc"
 
 app = Client("website_status_bot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-
+app.start()
+print("Powered by hianime.to")
+idle()
 # Function to check the website status
 def check_website_status():
     url = "https://hianime.to"
@@ -40,6 +42,4 @@ while True:
     time.sleep(120)
 
 # Start the bot
-app.start()
-print("Powered by hianime.to")
-idle()
+
